@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity{
         @Override
         protected void onPreExecute() {
             Toast.makeText(MainActivity.this,"Json Data is " +
-                    "downloading",Toast.LENGTH_LONG).show();
+                    "downloading",Toast.LENGTH_SHORT).show();
         }
 
         @Override
