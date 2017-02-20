@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">DoYouSmartInFootball</string>
+    <string-array name="array_category">
+        <item>Players</item>
+        <item>Teams</item>
+        <item>Leagues</item>
+        <item>Competitions</item>
+    </string-array>
 </resources>
