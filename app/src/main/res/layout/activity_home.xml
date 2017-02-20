@@ -15,12 +15,26 @@
         android:id="@+id/btnQuiz"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:magic_button_size="500dp"
+        app:magic_button_size="50dp"
         app:button_icon_width="25dp"
         app:button_icon_height="25dp"
         app:hide_text="Quiz Mode"
         app:hide_text_size="15dp"
         app:hide_text_color="@android:color/black"
-        app:icon_button_color="button_icon_color"
-        app:expandable_area_color="that_expandable_button_part_color"/>
+        />
+
+    <br.com.bloder.magic.view.MagicButton
+        android:id="@+id/btnFyi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:magic_button_size="50dp"
+        app:icon_button_color="@color/c_acidgreen"
+        app:button_icon_width="25dp"
+        app:button_icon_height="25dp"
+        app:hide_text="For Your Information"
+        app:hide_text_size="15dp"
+        app:hide_text_color="@android:color/black"
+        android:layout_below="@+id/btnQuiz"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="11dp" />
 </RelativeLayout>

@@ -27,5 +27,6 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.1.1'
     compile 'com.github.bloder:magic:1.1'
+    compile 'com.cesarferreira.colorize:library:0.2.1'
     testCompile 'junit:junit:4.12'
 }
