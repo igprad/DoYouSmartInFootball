@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.android.alz.doyousmartinfootball.Home"
+    android:background="@drawable/wallpaperfootball">
+    <br.com.bloder.magic.view.MagicButton
+        android:id="@+id/btnQuiz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:magic_button_size="500dp"
+        app:button_icon_width="25dp"
+        app:button_icon_height="25dp"
+        app:hide_text="Quiz Mode"
+        app:hide_text_size="15dp"
+        app:hide_text_color="@android:color/black"
+        app:icon_button_color="button_icon_color"
+        app:expandable_area_color="that_expandable_button_part_color"/>
+</RelativeLayout>
