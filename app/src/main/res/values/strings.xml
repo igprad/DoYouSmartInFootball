@@ -1,9 +1,8 @@
 <resources>
     <string name="app_name">DoYouSmartInFootball</string>
-    <string-array name="array_category">
-        <item>Players</item>
-        <item>Teams</item>
-        <item>Leagues</item>
+    <string-array name="array_for_competitions">
         <item>Competitions</item>
+        <item>Teams</item>
+        <item>League Table</item>
     </string-array>
 </resources>

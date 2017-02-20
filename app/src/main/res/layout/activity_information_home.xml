@@ -13,47 +13,6 @@
     tools:context="com.android.alz.doyousmartinfootball.InformationHome">
 
     <ru.katso.livebutton.LiveButton
-        xmlns:livebutton="http://schemas.android.com/apk/res-auto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="6pt"
-        android:id="@+id/btnPlayers"
-        android:padding="5dp"
-        android:text="  Players"
-        android:textAlignment="center"
-        livebutton:backgroundColor="@color/c_greenyellow"
-        livebutton:shadowColor="@color/c_dark_green"
-        />
-
-    <ru.katso.livebutton.LiveButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="6pt"
-        android:id="@+id/btnLeagues"
-        android:padding="5dp"
-        android:text="  Leagues"
-        android:textAlignment="center"
-        livebutton:backgroundColor="@color/c_greenyellow"
-        livebutton:shadowColor="@color/c_dark_green"
-        android:layout_marginStart="25dp"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/btnTeams" />
-
-    <ru.katso.livebutton.LiveButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="6pt"
-        android:id="@+id/btnTeams"
-        android:padding="5dp"
-        android:text="  Teams"
-        android:textAlignment="center"
-        livebutton:backgroundColor="@color/c_greenyellow"
-        livebutton:shadowColor="@color/c_dark_green"
-        android:layout_marginStart="20dp"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/btnPlayers" />
-
-    <ru.katso.livebutton.LiveButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="6pt"
@@ -64,5 +23,45 @@
         livebutton:backgroundColor="@color/c_greenyellow"
         livebutton:shadowColor="@color/c_dark_green"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentStart="true" />
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="480sp"
+        android:layout_below="@id/btnCompetitions"
+        android:background="@color/c_black_leather_jacket"
+        android:layout_marginBottom="-10px"
+        >
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner"
+            android:popupBackground="@color/c_black_leather_jacket"
+            />
+
+        <ru.katso.livebutton.LiveButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="6pt"
+            android:id="@+id/btnOK"
+            android:padding="5dp"
+            android:text="  OK"
+            android:textAlignment="center"
+            livebutton:backgroundColor="@color/c_greenyellow"
+            livebutton:shadowColor="@color/c_dark_green"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="50dp"
+            android:layout_below="@+id/spinner"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/txtData"
+            android:layout_below="@id/btnOK"/>
+    </RelativeLayout>
+
+
 </RelativeLayout>

@@ -30,5 +30,6 @@ dependencies {
     compile 'com.cesarferreira.colorize:library:0.2.1'
     compile 'phelat.textview:textviewplus:1.2.2'
     compile 'com.github.dakatso:livebutton:1.0.0'
+    compile 'com.yarolegovich:lovely-dialog:1.0.4'
     testCompile 'junit:junit:4.12'
 }
