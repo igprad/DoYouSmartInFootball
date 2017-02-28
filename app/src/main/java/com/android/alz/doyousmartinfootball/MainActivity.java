@@ -11,9 +11,16 @@ import android.widget.Toast;
 import com.android.alz.doyousmartinfootball.api.FootballData;
 import com.android.alz.doyousmartinfootball.controller.ApiController;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class MainActivity extends AppCompatActivity{
-
+    private ArrayList<HashMap<String,String>> resultJson;
     private ApiController apiController = new ApiController();
     private TextView txtView1;
 
@@ -25,6 +32,8 @@ public class MainActivity extends AppCompatActivity{
 
         new GetData(FootballData.TEAMS+
                 FootballData.MANCHESTER_UNITED).execute();
+
+        resultJson = new ArrayList<HashMap<String,String>>();
 
     }
 
@@ -43,6 +52,28 @@ public class MainActivity extends AppCompatActivity{
         @Override
         protected Void doInBackground(Void... params) {
             result = apiController.getStringJSON(resource);
+            if(result!=null){
+                try {
+                    JSONArray data = new JSONArray(result);
+                    for (int i = 0; i <data.length() ; i++) {
+                        HashMap<String,String> tempData = new HashMap<>();
+                        JSONObject object = data.getJSONObject(i);
+                        tempData.put("id",object.getString("id"));
+                        tempData.put("id",object.getString("caption"));
+                        tempData.put("id",object.getString("league"));
+                        tempData.put("id",object.getString("year"));
+                        tempData.put("id",object.getString("currentMatchday"));
+                        tempData.put("id",object.getString("numberOfMatchdays"));
+                        tempData.put("id",object.getString("numberOfGames"));
+                        tempData.put("id",object.getString("lastUpdated"));
+
+                        resultJson.add(tempData);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
             Log.e("Result JSON :",result);
             return null;
         }

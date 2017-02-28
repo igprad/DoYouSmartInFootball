@@ -8,6 +8,7 @@ public interface FootballData {
     String END_POINT = "http://api.football-data.org/v1/";
     String KEY = "7f08807927df41c4b32ea4a986ad764c";
     String COMPETITIONS = "competitions/";
+    //================Competitions ID========================
     String COMP_EUROPEAN_CHAMPIONSHIPS_FRANCE="424/";
     String COMP_PREMIERE_LEAGUE = "426/";
     String COMP_CHAMPIONSHIP = "427/";
@@ -23,7 +24,7 @@ public interface FootballData {
     String COMP_SERIE_A="438/";
     String COMP_PRIMEIRA_LIGA="439/";
     String COMP_CHAMPIONS_LEAGUE="440/";
-
+    //===============TEAMS===================================
     String TEAMS  ="teams/";
     String MANCHESTER_UNITED = "66";
 }

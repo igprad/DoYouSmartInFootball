@@ -13,6 +13,10 @@ import com.android.alz.doyousmartinfootball.api.FootballData;
 //import org.json.JSONException;
 //import org.json.JSONObject;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,17 +32,6 @@ import java.net.URL;
 public class ApiController {
 
     public String getStringJSON(String resourceUrlRequest){
-//        Not Using This Anymore, because depracted
-//        HttpClient client = new DefaultHttpClient();
-//        String getURL = FootballData.END_POINT+FootballData.COMPETITIONS;
-//        HttpGet httpGet = new HttpGet(getURL);
-//        httpGet.setHeader("X-Auth-Token",FootballData.KEY);
-//        HttpResponse response = client.execute(httpGet);
-//        HttpEntity resEntity = response.getEntity();
-//        if(resEntity!=null){
-//            Log.e("Response", EntityUtils.toString(resEntity));
-//        }
-//        depracted - using setRequestProperty to make request header
 
         String getURL = FootballData.END_POINT+resourceUrlRequest;
         try {
@@ -56,6 +49,7 @@ public class ApiController {
         }
         return null;
     }
+
 
     private String convertStreamToString(InputStream is) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));

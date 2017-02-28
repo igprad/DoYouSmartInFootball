@@ -16,6 +16,7 @@ import com.android.alz.doyousmartinfootball.controller.ApiController;
 import ru.katso.livebutton.LiveButton;
 
 public class InformationHome extends AppCompatActivity {
+    private String resultJSON;
     private Spinner spinner;
     private LiveButton btnCompetitions,btnOK;
     private ArrayAdapter<String> stringArrayAdapter;
@@ -45,6 +46,7 @@ public class InformationHome extends AppCompatActivity {
                 if(spinner.getSelectedItem().toString().equalsIgnoreCase("Competitions")){
                     //Untuk data competitions
                     new GetData(FootballData.COMPETITIONS).execute();
+
                 }
             }
         });
@@ -78,7 +80,8 @@ public class InformationHome extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            txtView1.setText(result);
+//            txtView1.setText(result);
+            resultJSON = result;
             Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
         }
     }
