@@ -59,13 +59,13 @@ public class MainActivity extends AppCompatActivity{
                         HashMap<String,String> tempData = new HashMap<>();
                         JSONObject object = data.getJSONObject(i);
                         tempData.put("id",object.getString("id"));
-                        tempData.put("id",object.getString("caption"));
-                        tempData.put("id",object.getString("league"));
-                        tempData.put("id",object.getString("year"));
-                        tempData.put("id",object.getString("currentMatchday"));
-                        tempData.put("id",object.getString("numberOfMatchdays"));
-                        tempData.put("id",object.getString("numberOfGames"));
-                        tempData.put("id",object.getString("lastUpdated"));
+                        tempData.put("caption",object.getString("caption"));
+                        tempData.put("league",object.getString("league"));
+                        tempData.put("year",object.getString("year"));
+                        tempData.put("currentMatchDay",object.getString("currentMatchday"));
+                        tempData.put("numberOfMatchDays",object.getString("numberOfMatchdays"));
+                        tempData.put("numberOfGames",object.getString("numberOfGames"));
+                        tempData.put("lastUpdated",object.getString("lastUpdated"));
 
                         resultJson.add(tempData);
                     }
