@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListAdapter;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,6 +83,10 @@ public class MainActivity extends AppCompatActivity{
         @Override
         protected void onPostExecute(Void aVoid) {
             txtView1.setText(result);
+//            ListAdapter adapter = new SimpleAdapter(
+//                    MainActivity.this,resultJson,
+//                    new String[""]
+//            )
             Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
         }
     }
