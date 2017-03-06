@@ -5,62 +5,67 @@
     android:id="@+id/activity_information_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:background="@color/material_greenA400"
+    android:paddingBottom="2dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/c_caribbean_green"
     tools:context="com.android.alz.doyousmartinfootball.InformationHome">
 
     <ru.katso.livebutton.LiveButton
+        android:id="@+id/btnCompetitions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="6pt"
-        android:id="@+id/btnCompetitions"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:padding="5dp"
         android:text="  Competitions"
         android:textAlignment="center"
-        livebutton:backgroundColor="@color/c_greenyellow"
-        livebutton:shadowColor="@color/c_dark_green"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:textSize="6pt"
+        livebutton:backgroundColor="@color/md_green300"
+        livebutton:shadowColor="@color/material_green900" />
+
     <RelativeLayout
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="480sp"
         android:layout_below="@id/btnCompetitions"
-        android:background="@color/c_black_leather_jacket"
-        android:layout_marginBottom="-10px"
-        >
+        android:layout_marginTop="10dp"
+        android:background="@color/material_green50">
 
         <Spinner
+            android:id="@+id/spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner"
-            android:popupBackground="@color/c_black_leather_jacket"
-            />
+            android:textColor="@color/material_black"
+            android:popupBackground="@color/material_green200" />
 
         <ru.katso.livebutton.LiveButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="6pt"
             android:id="@+id/btnOK"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/spinner"
+            android:layout_marginTop="50dp"
             android:padding="5dp"
             android:text="  OK"
             android:textAlignment="center"
-            livebutton:backgroundColor="@color/c_greenyellow"
-            livebutton:shadowColor="@color/c_dark_green"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="50dp"
-            android:layout_below="@+id/spinner"
-            />
+            android:textSize="6pt"
+            livebutton:backgroundColor="@color/material_green200"
+            livebutton:shadowColor="@color/material_green800" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/txtData"
-            android:layout_below="@id/btnOK"/>
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/btnOK"
+            android:textColor="@color/material_black"
+            android:padding="0dp"
+            android:paddingBottom="0dp"
+            android:paddingEnd="0dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:paddingStart="0dp" />
     </RelativeLayout>
 
 

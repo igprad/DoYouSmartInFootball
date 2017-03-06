@@ -18,6 +18,7 @@ android {
         }
     }
     useLibrary 'org.apache.http.legacy'
+//    compileOptions.encoding = 'utf-8'
 }
 
 dependencies {
@@ -27,7 +28,8 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.1.1'
     compile 'com.github.bloder:magic:1.1'
-    compile 'com.cesarferreira.colorize:library:0.2.1'
+//    compile 'com.cesarferreira.colorize:library:0.2.1'
+    compile 'com.github.mcginty:material-colors:1.1.0'
     compile 'phelat.textview:textviewplus:1.2.2'
     compile 'com.github.dakatso:livebutton:1.0.0'
     compile 'com.yarolegovich:lovely-dialog:1.0.4'
