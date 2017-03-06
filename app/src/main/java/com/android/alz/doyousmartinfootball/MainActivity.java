@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity{
     private ArrayList<HashMap<String,String>> resultJson;
     private ApiController apiController = new ApiController();
     private TextView txtView1;
-
+    private String temp ="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,18 +76,31 @@ public class MainActivity extends AppCompatActivity{
                     e.printStackTrace();
                 }
             }
-            Log.e("Result JSON :",result);
+
+            for (int i = 0; i <resultJson.size() ; i++) {
+                temp+=resultJson.get(i).get("id")+"\n";
+                temp+=resultJson.get(i).get("caption")+"\n";
+                temp+=resultJson.get(i).get("league")+"\n";
+                temp+=resultJson.get(i).get("year")+"\n";
+                temp+=resultJson.get(i).get("currentMatchDay")+"\n";
+                temp+=resultJson.get(i).get("numberOfMatchdays")+"\n";
+                temp+=resultJson.get(i).get("numberOfGames")+"\n";
+                temp+=resultJson.get(i).get("lastUpdated")+"\n";
+                temp+="\n";
+            }
+            Log.e("Result JSON :",temp);
+
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            txtView1.setText(result);
+            txtView1.setText(temp);
 //            ListAdapter adapter = new SimpleAdapter(
 //                    MainActivity.this,resultJson,
 //                    new String[""]
 //            )
-            Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),temp,Toast.LENGTH_SHORT).show();
         }
     }
 }
