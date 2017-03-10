@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,53 +14,47 @@ import android.widget.Toast;
 import com.android.alz.doyousmartinfootball.api.FootballData;
 import com.android.alz.doyousmartinfootball.controller.ApiController;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import ru.katso.livebutton.LiveButton;
 
 public class InformationHome extends AppCompatActivity {
-    private String resultJSON;
+//    private ArrayList<HashMap<String,String>> resultJson;
+    private ArrayList<String> tempData;
+    private String tempStringHasilJSON="";
     private Spinner spinner;
     private LiveButton btnCompetitions,btnOK;
     private ArrayAdapter<String> stringArrayAdapter;
     private ApiController apiController = new ApiController();
     private TextView txtView1;
+    private ArrayList<String> temp;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        resultJson = new ArrayList<HashMap<String, String>>();
+        tempData = new ArrayList<String>();
         setContentView(R.layout.activity_information_home);
-        spinner = (Spinner) findViewById(R.id.spinner);
+
         btnCompetitions = (LiveButton) findViewById(R.id.btnCompetitions);
-        btnOK = (LiveButton) findViewById(R.id.btnOK);
-        txtView1 = (TextView) findViewById(R.id.txtData);
-        setAdapterSpinnerCategory();
+
+        listView = (ListView) findViewById(R.id.ViewListResult);
 
         btnCompetitions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setAdapterSpinnerCategory();
+                new GetData(FootballData.COMPETITIONS).execute();
             }
         });
 
-        btnOK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(spinner.getSelectedItem().toString().equalsIgnoreCase("Competitions")){
-                    //Untuk data competitions
-                    new GetData(FootballData.COMPETITIONS).execute();
-
-                }
-            }
-        });
     }
-
-    public void setAdapterSpinnerCategory(){
-        stringArrayAdapter
-                = new ArrayAdapter<String>(getApplicationContext(),
-                android.R.layout.simple_spinner_dropdown_item,
-                getResources().getStringArray(R.array.array_for_competitions));
-        spinner.setAdapter(stringArrayAdapter);
-    }
-
     private class GetData extends AsyncTask<Void,Void,Void> {
         private String resource,result ;
 
@@ -74,14 +69,52 @@ public class InformationHome extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             result = apiController.getStringJSON(resource);
-            Log.e("Result JSON :",result);
+            if(!result.isEmpty()){
+                try {
+                    JSONArray data = new JSONArray(result);
+                    for (int i = 0; i <data.length() ; i++) {
+//                        HashMap<String,String> tempData = new HashMap<String,String>();
+//                        JSONObject object = data.getJSONObject(i);
+//                        tempData.put("id",object.getString("id"));
+//                            Log.e("ID : ",object.getString("id"));
+//                        tempData.put("caption",object.getString("caption"));
+//                            Log.e("ID : ",object.getString("caption"));
+//                        tempData.put("league",object.getString("league"));
+//                        Log.e("ID : ",object.getString("league"));
+//                        tempData.put("year",object.getString("year"));
+//                            Log.e("ID : ",object.getString("year"));
+//                        tempData.put("currentMatchday",object.getString("currentMatchday"));
+//                            Log.e("ID : ",object.getString("currentMatchday"));
+//                        tempData.put("numberOfMatchdays",object.getString("numberOfMatchdays"));
+//                            Log.e("ID : ",object.getString("numberOfMatchdays"));
+//                        tempData.put("numberOfGames",object.getString("numberOfGames"));
+//                        Log.e("ID : ",object.getString("numberOfGames"));
+//                        tempData.put("lastUpdated",object.getString("lastUpdated"));
+//                            Log.e("ID : ",object.getString("lastUpdated"));
+//                        resultJson.add(tempData);
+
+
+                        JSONObject object = data.getJSONObject(i);
+                        tempData.add(object.getString("caption"));
+                        Log.e("error",tempData.get(i).toString());
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-//            txtView1.setText(result);
-            resultJSON = result;
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                    android.R.layout.simple_list_item_1,
+                    android.R.id.text1,tempData);
+
+            listView.setAdapter(adapter);
+
             Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
         }
     }
