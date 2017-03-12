@@ -97,7 +97,7 @@ public class detailCompetition extends AppCompatActivity {
                 tbrow.setBackgroundColor(Color.GRAY);
             }
             if(dataTimCompetition.get(i).get("group").equalsIgnoreCase("E")){
-                
+
             }
             if(dataTimCompetition.get(i).get("group").equalsIgnoreCase("F")){
                 tbrow.setBackgroundColor(Color.DKGRAY);
