@@ -18,7 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".InformationHome"></activity>
+        <activity android:name=".InformationHome" />
+        <activity android:name=".detailCompetition"></activity>
     </application>
 
 </manifest>

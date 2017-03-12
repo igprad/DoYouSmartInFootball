@@ -1,10 +1,12 @@
 package com.android.alz.doyousmartinfootball;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -19,14 +21,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+
 
 import ru.katso.livebutton.LiveButton;
 
 public class InformationHome extends AppCompatActivity {
-//    private ArrayList<HashMap<String,String>> resultJson;
     private ArrayList<String> tempData;
+    private ArrayList<String> tempLinkLeagueTable;
     private String tempStringHasilJSON="";
     private Spinner spinner;
     private LiveButton btnCompetitions,btnOK;
@@ -39,8 +40,10 @@ public class InformationHome extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        resultJson = new ArrayList<HashMap<String, String>>();
-        tempData = new ArrayList<String>();
+        getSupportActionBar().hide();
+
+        tempLinkLeagueTable = new ArrayList<>();
+        tempData = new ArrayList<>();
         setContentView(R.layout.activity_information_home);
 
         btnCompetitions = (LiveButton) findViewById(R.id.btnCompetitions);
@@ -50,15 +53,26 @@ public class InformationHome extends AppCompatActivity {
         btnCompetitions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new GetData(FootballData.COMPETITIONS).execute();
+                new GetDataCompetition(FootballData.COMPETITIONS).execute();
             }
         });
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(getApplicationContext(),tempLinkLeagueTable.get(position),Toast.LENGTH_LONG).show(); mengecek link href dari hateoas
+                Intent goToNextActivity = new Intent(getApplicationContext(),detailCompetition.class);
+                Bundle data = new Bundle();
+                data.putString("endpoint",tempLinkLeagueTable.get(position));
+                goToNextActivity.putExtras(data);
+                startActivity(goToNextActivity);
+            }
+        });
     }
-    private class GetData extends AsyncTask<Void,Void,Void> {
+    private class GetDataCompetition extends AsyncTask<Void,Void,Void> {
         private String resource,result ;
 
-        public GetData(String resourceInput){resource=resourceInput;}
+        public GetDataCompetition(String resourceInput){resource=resourceInput;}
 
         @Override
         protected void onPreExecute() {
@@ -73,29 +87,12 @@ public class InformationHome extends AppCompatActivity {
                 try {
                     JSONArray data = new JSONArray(result);
                     for (int i = 0; i <data.length() ; i++) {
-//                        HashMap<String,String> tempData = new HashMap<String,String>();
-//                        JSONObject object = data.getJSONObject(i);
-//                        tempData.put("id",object.getString("id"));
-//                            Log.e("ID : ",object.getString("id"));
-//                        tempData.put("caption",object.getString("caption"));
-//                            Log.e("ID : ",object.getString("caption"));
-//                        tempData.put("league",object.getString("league"));
-//                        Log.e("ID : ",object.getString("league"));
-//                        tempData.put("year",object.getString("year"));
-//                            Log.e("ID : ",object.getString("year"));
-//                        tempData.put("currentMatchday",object.getString("currentMatchday"));
-//                            Log.e("ID : ",object.getString("currentMatchday"));
-//                        tempData.put("numberOfMatchdays",object.getString("numberOfMatchdays"));
-//                            Log.e("ID : ",object.getString("numberOfMatchdays"));
-//                        tempData.put("numberOfGames",object.getString("numberOfGames"));
-//                        Log.e("ID : ",object.getString("numberOfGames"));
-//                        tempData.put("lastUpdated",object.getString("lastUpdated"));
-//                            Log.e("ID : ",object.getString("lastUpdated"));
-//                        resultJson.add(tempData);
-
 
                         JSONObject object = data.getJSONObject(i);
+                        JSONObject objectLinks = object.getJSONObject("_links").getJSONObject("leagueTable");
+                        tempLinkLeagueTable.add(objectLinks.getString("href"));
                         tempData.add(object.getString("caption"));
+
                         Log.e("error",tempData.get(i).toString());
                     }
 
