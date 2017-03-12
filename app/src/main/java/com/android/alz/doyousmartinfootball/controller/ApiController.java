@@ -38,6 +38,25 @@ public class ApiController {
         return null;
     }
 
+    public String getStringJSON(String resourceUrlRequest,int version){
+
+        String getURL = resourceUrlRequest;
+        try {
+            URL url = new URL(getURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("CustomHeader", FootballData.KEY);
+            InputStream in = new BufferedInputStream(conn.getInputStream());
+
+            return convertStreamToString(in);
+
+        }catch(IOException ex){
+            Log.e("Errors: ",ex.toString());
+        }
+        return null;
+    }
+
 
     private String convertStreamToString(InputStream is) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));

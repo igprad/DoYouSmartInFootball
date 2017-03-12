@@ -40,7 +40,7 @@ public class InformationHome extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
+        getSupportActionBar().setTitle("Information");
 
         tempLinkLeagueTable = new ArrayList<>();
         tempData = new ArrayList<>();
