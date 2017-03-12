@@ -27,7 +27,7 @@ public class ApiController {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("CustomHeader", FootballData.KEY);
+            conn.setRequestProperty("X-Auth-Token", FootballData.KEY);
             InputStream in = new BufferedInputStream(conn.getInputStream());
 
             return convertStreamToString(in);
@@ -46,7 +46,7 @@ public class ApiController {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("CustomHeader", FootballData.KEY);
+            conn.setRequestProperty("X-Auth-Token", FootballData.KEY);
             InputStream in = new BufferedInputStream(conn.getInputStream());
 
             return convertStreamToString(in);

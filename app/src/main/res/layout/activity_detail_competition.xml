@@ -4,34 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.android.alz.doyousmartinfootball.detailCompetition">
+    tools:context="com.android.alz.doyousmartinfootball.detailCompetition"
+    android:background="@color/md_green800">
 
     <ScrollView
         android:id="@+id/scrollView1"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#3d455b"
-        android:layout_alignParentLeft="true" >
+        android:background="#3d455b">
 
         <HorizontalScrollView
             android:id="@+id/hscrll1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 
-            <RelativeLayout
-                android:id="@+id/RelativeLayout1"
-                android:layout_width="match_parent"
-                android:layout_gravity="center"
-                android:layout_height="fill_parent"
-                android:orientation="vertical" >
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/RelativeLayout1"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="vertical" >-->
 
                 <TableLayout
                     android:id="@+id/table_main"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true" >
                 </TableLayout>
-            </RelativeLayout>
+            <!--</RelativeLayout>-->
         </HorizontalScrollView>
     </ScrollView>
 </RelativeLayout>

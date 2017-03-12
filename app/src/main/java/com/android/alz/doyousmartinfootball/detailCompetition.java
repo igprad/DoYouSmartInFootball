@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -39,8 +40,7 @@ public class detailCompetition extends AppCompatActivity {
     }
 
 
-    public void showTable(){
-
+    public void showTableChampionLeague(){
 
         TableLayout stk = (TableLayout) findViewById(R.id.table_main);
         TableRow tbrow0 = new TableRow(this);
@@ -58,6 +58,7 @@ public class detailCompetition extends AppCompatActivity {
         TextView tv2 = new TextView(this);
         tv2.setText(" team ");
         tv2.setTextColor(Color.WHITE);
+        tv2.setGravity(Gravity.CENTER);
         tbrow0.addView(tv2);
 
         TextView tv3 = new TextView(this);
@@ -82,8 +83,26 @@ public class detailCompetition extends AppCompatActivity {
 
         stk.addView(tbrow0);
         for (int i = 0; i < dataTimCompetition.size(); i++) {
-            Log.e("CEK ERROR APA SIH : ",dataTimCompetition.get(i).get("group"));
             TableRow tbrow = new TableRow(this);
+            if(dataTimCompetition.get(i).get("group").equalsIgnoreCase("A")){
+                tbrow.setBackgroundColor(Color.DKGRAY);
+            }
+            if(dataTimCompetition.get(i).get("group").equalsIgnoreCase("B")){
+                tbrow.setBackgroundColor(Color.GRAY);
+            }
+            if(dataTimCompetition.get(i).get("group").equalsIgnoreCase("C")){
+
+            }
+            if(dataTimCompetition.get(i).get("group").equalsIgnoreCase("D")){
+                tbrow.setBackgroundColor(Color.GRAY);
+            }
+            if(dataTimCompetition.get(i).get("group").equalsIgnoreCase("E")){
+                
+            }
+            if(dataTimCompetition.get(i).get("group").equalsIgnoreCase("F")){
+                tbrow.setBackgroundColor(Color.DKGRAY);
+            }
+            Log.e("CEK ERROR APA SIH : ",dataTimCompetition.get(i).get("group"));
 
             TextView t1v = new TextView(this);
             t1v.setText("" + dataTimCompetition.get(i).get("group"));
@@ -160,7 +179,7 @@ public class detailCompetition extends AppCompatActivity {
                         tempData.put("group",data.getString("group"));
                         tempData.put("rank",data.getString("rank"));
                         tempData.put("team",data.getString("team"));
-                        Log.e("COK TES MUNCUL ORA",tempData.get("team"));//VALID COY
+                        Log.e("Cek data ",tempData.get("team"));//VALID COY
                         tempData.put("teamId",data.getString("teamId"));
                         tempData.put("playedGames",data.getString("playedGames"));
                         tempData.put("crestURI",data.getString("crestURI"));
@@ -269,7 +288,7 @@ public class detailCompetition extends AppCompatActivity {
                 Log.e("Tes Habis Selesai  : ",dataTimCompetition.get(i).get("group"));
             }
             Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
-            showTable();
+            showTableChampionLeague();
         }
     }
 
