@@ -1,6 +1,8 @@
 package com.android.alz.doyousmartinfootball;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -8,17 +10,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.alz.doyousmartinfootball.controller.ApiController;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -35,10 +45,120 @@ public class detailCompetition extends AppCompatActivity {
         dataTimCompetition = new ArrayList<>();
         endpointCompetition = intent.getStringExtra("endpoint");
         apiController = new ApiController();
-        new GetDataTeam(endpointCompetition).execute();
+        String jenis = intent.getStringExtra("jenis");
+        if(jenis.equalsIgnoreCase("EC")||jenis.equalsIgnoreCase("CL")) {
+            new GetDataTeam(endpointCompetition).execute();
+        }
+        else{
+            new GetDataTeam2(endpointCompetition).execute();
+        }
 
     }
 
+
+    public void showTableLeague(){
+
+        TableLayout stk = (TableLayout) findViewById(R.id.table_main);
+        TableRow tbrow0 = new TableRow(this);
+
+        TextView tv0 = new TextView(this);
+        tv0.setText(" Position ");
+        tv0.setTextColor(Color.WHITE);
+        tbrow0.addView(tv0);
+
+        TextView tv1 = new TextView(this);
+        tv1.setText(" TeamName ");
+        tv1.setTextColor(Color.WHITE);
+        tv1.setGravity(Gravity.CENTER);
+        tbrow0.addView(tv1);
+
+        TextView tv2 = new TextView(this);
+        tv2.setText(" Logo ");
+        tv2.setTextColor(Color.WHITE);
+        tv2.setGravity(Gravity.CENTER);
+        tbrow0.addView(tv2);
+
+        TextView tv3 = new TextView(this);
+        tv3.setText(" Played Games ");
+        tv3.setTextColor(Color.WHITE);
+        tbrow0.addView(tv3);
+
+        TextView tv4 = new TextView(this);
+        tv4.setText(" goals ");
+        tv4.setTextColor(Color.WHITE);
+        tbrow0.addView(tv4);
+
+        TextView tv5 = new TextView(this);
+        tv5.setText(" win ");
+        tv5.setTextColor(Color.WHITE);
+        tbrow0.addView(tv5);
+
+        TextView tv6 = new TextView(this);
+        tv6.setText(" losses ");
+        tv6.setTextColor(Color.WHITE);
+        tbrow0.addView(tv6);
+
+        TextView tv7 = new TextView(this);
+        tv7.setText(" Point ");
+        tv7.setTextColor(Color.WHITE);
+        tbrow0.addView(tv7);
+
+        stk.addView(tbrow0);
+        for (int i = 0; i < dataTimCompetition.size(); i++) {
+            TableRow tbrow = new TableRow(this);
+
+            TextView t1v = new TextView(this);
+            t1v.setText("" + dataTimCompetition.get(i).get("position"));
+            t1v.setTextColor(Color.WHITE);
+            t1v.setGravity(Gravity.CENTER);
+            tbrow.addView(t1v);
+
+            TextView t2v = new TextView(this);
+            t2v.setText(" " + dataTimCompetition.get(i).get("team"));
+            t2v.setTextColor(Color.WHITE);
+            t2v.setGravity(Gravity.CENTER);
+            tbrow.addView(t2v);
+
+            ImageView i1v = new ImageView(this);
+            Picasso.with(getApplicationContext())
+                    .load(dataTimCompetition.get(i).get("photo"))
+                    .resize(50,50)
+                    .into(i1v);
+            tbrow.addView(i1v);
+
+            TextView t4v = new TextView(this);
+            t4v.setText(" " + dataTimCompetition.get(i).get("playedGames"));
+            t4v.setTextColor(Color.WHITE);
+            t4v.setGravity(Gravity.CENTER);
+            tbrow.addView(t4v);
+
+            TextView t5v = new TextView(this);
+            t5v.setText(" " + dataTimCompetition.get(i).get("goals"));
+            t5v.setTextColor(Color.WHITE);
+            t5v.setGravity(Gravity.CENTER);
+            tbrow.addView(t5v);
+
+            TextView t6v = new TextView(this);
+            t6v.setText(" " + dataTimCompetition.get(i).get("win"));
+            t6v.setTextColor(Color.WHITE);
+            t6v.setGravity(Gravity.CENTER);
+            tbrow.addView(t6v);
+
+            TextView t7v = new TextView(this);
+            t7v.setText(" " + dataTimCompetition.get(i).get("losse"));
+            t7v.setTextColor(Color.WHITE);
+            t7v.setGravity(Gravity.CENTER);
+            tbrow.addView(t7v);
+
+            TextView t8v = new TextView(this);
+            t8v.setText(" " + dataTimCompetition.get(i).get("points"));
+            t8v.setTextColor(Color.WHITE);
+            t8v.setGravity(Gravity.CENTER);
+            tbrow.addView(t8v);
+
+            stk.addView(tbrow);
+        }
+    }
 
     public void showTableChampionLeague(){
 
@@ -148,8 +268,9 @@ public class detailCompetition extends AppCompatActivity {
 
             stk.addView(tbrow);
         }
-
     }
+
+
 
 
     private class GetDataTeam extends AsyncTask<Void,Void,Void> {
@@ -289,6 +410,61 @@ public class detailCompetition extends AppCompatActivity {
             }
             Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
             showTableChampionLeague();
+        }
+    }
+
+// Data untuk Team Beda JSON
+    private class GetDataTeam2 extends AsyncTask<Void,Void,Void> {
+        private String resource,result ;
+
+        public GetDataTeam2(String resourceInput){resource=resourceInput;}
+
+        @Override
+        protected void onPreExecute() {
+            Toast.makeText(getApplicationContext(),"Downloading Json",Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            result = apiController.getStringJSON(resource,2);
+            int indeksData=0;
+            JSONObject data ;
+            JSONArray arrayOfDivisi;
+            if(!result.isEmpty()){
+                try {
+                    JSONObject team = new JSONObject(result);
+                    arrayOfDivisi = team.getJSONArray("standing");
+                    for (int i = 0; i < arrayOfDivisi.length() ; i++) {
+                        HashMap<String,String> tempData;
+                        tempData = new HashMap<>();
+                        data = arrayOfDivisi.getJSONObject(i);
+                        tempData.put("position",data.getString("position"));
+                        tempData.put("team",data.getString("teamName"));
+                        tempData.put("photo",data.getString("crestURI"));
+//                        Log.e("Cek data ",tempData.get("team"));//VALID COY
+                        tempData.put("win",data.getString("wins"));
+                        tempData.put("playedGames",data.getString("playedGames"));
+                        tempData.put("points",data.getString("points"));
+                        tempData.put("goals",data.getString("goals"));
+                        tempData.put("draw",data.getString("draws"));
+                        tempData.put("losse",data.getString("losses"));
+                        dataTimCompetition.add(tempData);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            for (int i = 0; i < dataTimCompetition.size(); i++) {
+                Log.e("Tes Habis Selesai  : ",dataTimCompetition.get(i).get("team"));
+            }
+            Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
+            showTableLeague();
         }
     }
 

@@ -28,6 +28,7 @@ import ru.katso.livebutton.LiveButton;
 public class InformationHome extends AppCompatActivity {
     private ArrayList<String> tempData;
     private ArrayList<String> tempLinkLeagueTable;
+    private ArrayList<String> tempJenis;
     private String tempStringHasilJSON="";
     private Spinner spinner;
     private LiveButton btnCompetitions,btnOK;
@@ -44,6 +45,8 @@ public class InformationHome extends AppCompatActivity {
 
         tempLinkLeagueTable = new ArrayList<>();
         tempData = new ArrayList<>();
+        tempJenis = new ArrayList<>();
+
         setContentView(R.layout.activity_information_home);
 
         btnCompetitions = (LiveButton) findViewById(R.id.btnCompetitions);
@@ -64,6 +67,7 @@ public class InformationHome extends AppCompatActivity {
                 Intent goToNextActivity = new Intent(getApplicationContext(),detailCompetition.class);
                 Bundle data = new Bundle();
                 data.putString("endpoint",tempLinkLeagueTable.get(position));
+                data.putString("jenis",tempJenis.get(position));
                 goToNextActivity.putExtras(data);
                 startActivity(goToNextActivity);
             }
@@ -91,7 +95,10 @@ public class InformationHome extends AppCompatActivity {
                         JSONObject object = data.getJSONObject(i);
                         JSONObject objectLinks = object.getJSONObject("_links").getJSONObject("leagueTable");
                         tempLinkLeagueTable.add(objectLinks.getString("href"));
-                        tempData.add(object.getString("caption"));
+
+                        JSONObject object2 = data.getJSONObject(i);
+                        tempData.add(object2.getString("caption"));
+                        tempJenis.add(object2.getString("league"));
 
                         Log.e("error",tempData.get(i).toString());
                     }

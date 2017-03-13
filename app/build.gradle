@@ -33,5 +33,6 @@ dependencies {
     compile 'phelat.textview:textviewplus:1.2.2'
     compile 'com.github.dakatso:livebutton:1.0.0'
     compile 'com.yarolegovich:lovely-dialog:1.0.4'
+    compile 'com.squareup.picasso:picasso:2.5.2'
     testCompile 'junit:junit:4.12'
 }
