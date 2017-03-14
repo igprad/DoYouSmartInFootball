@@ -80,6 +80,7 @@ public class InformationHome extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
+            tempData.clear();
             Toast.makeText(InformationHome.this,"Json Data is " +
                     "downloading",Toast.LENGTH_SHORT).show();
         }

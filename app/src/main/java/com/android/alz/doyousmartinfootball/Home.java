@@ -21,6 +21,13 @@ public class Home extends AppCompatActivity {
         btnQuiz = (MagicButton) findViewById(R.id.btnQuiz);
         btnInformation = (MagicButton) findViewById(R.id.btnFyi);
 
+        btnQuiz.setMagicButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),QuizActivity.class);
+                startActivity(intent);
+            }
+        });
         btnInformation.setMagicButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

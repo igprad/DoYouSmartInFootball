@@ -19,7 +19,8 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".InformationHome" />
-        <activity android:name=".detailCompetition"></activity>
+        <activity android:name=".detailCompetition" />
+        <activity android:name=".QuizActivity"></activity>
     </application>
 
 </manifest>

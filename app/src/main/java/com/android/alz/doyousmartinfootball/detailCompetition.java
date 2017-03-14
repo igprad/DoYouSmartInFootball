@@ -1,40 +1,29 @@
 package com.android.alz.doyousmartinfootball;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.alz.doyousmartinfootball.controller.ApiController;
 import com.squareup.picasso.Picasso;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class detailCompetition extends AppCompatActivity {
     ApiController apiController;
     String endpointCompetition;
+    ArrayList<ImageView> imgView;
     ArrayList<HashMap<String,String>> dataTimCompetition;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +32,7 @@ public class detailCompetition extends AppCompatActivity {
         setContentView(R.layout.activity_detail_competition);
         Intent intent = getIntent();
         dataTimCompetition = new ArrayList<>();
+        imgView = new ArrayList<>();
         endpointCompetition = intent.getStringExtra("endpoint");
         apiController = new ApiController();
         String jenis = intent.getStringExtra("jenis");
@@ -52,9 +42,7 @@ public class detailCompetition extends AppCompatActivity {
         else{
             new GetDataTeam2(endpointCompetition).execute();
         }
-
     }
-
 
     public void showTableLeague(){
 
@@ -119,12 +107,13 @@ public class detailCompetition extends AppCompatActivity {
             t2v.setGravity(Gravity.CENTER);
             tbrow.addView(t2v);
 
-            ImageView i1v = new ImageView(this);
+            ImageView tempImage = new ImageView(this);
+            String url = dataTimCompetition.get(i).get("photo").replace(" ","%20");
             Picasso.with(getApplicationContext())
-                    .load(dataTimCompetition.get(i).get("photo"))
+                    .load(url)
                     .resize(50,50)
-                    .into(i1v);
-            tbrow.addView(i1v);
+                    .into(tempImage);
+            tbrow.addView(tempImage);
 
             TextView t4v = new TextView(this);
             t4v.setText(" " + dataTimCompetition.get(i).get("playedGames"));
@@ -174,6 +163,12 @@ public class detailCompetition extends AppCompatActivity {
         tv1.setText(" rank ");
         tv1.setTextColor(Color.WHITE);
         tbrow0.addView(tv1);
+
+        TextView txt = new TextView(this);
+        txt.setText(" Flag ");
+        txt.setTextColor(Color.WHITE);
+        txt.setGravity(Gravity.CENTER);
+        tbrow0.addView(txt);
 
         TextView tv2 = new TextView(this);
         tv2.setText(" team ");
@@ -236,6 +231,14 @@ public class detailCompetition extends AppCompatActivity {
             t2v.setGravity(Gravity.CENTER);
             tbrow.addView(t2v);
 
+            ImageView tempImage = new ImageView(this);
+            String url = dataTimCompetition.get(i).get("crestURI").replace(" ","%20");
+            Picasso.with(getApplicationContext())
+                    .load(url)
+                    .resize(50,50)
+                    .into(tempImage);
+            tbrow.addView(tempImage);
+
             TextView t3v = new TextView(this);
             t3v.setText(" " + dataTimCompetition.get(i).get("team"));
             t3v.setTextColor(Color.WHITE);
@@ -269,9 +272,6 @@ public class detailCompetition extends AppCompatActivity {
             stk.addView(tbrow);
         }
     }
-
-
-
 
     private class GetDataTeam extends AsyncTask<Void,Void,Void> {
         private String resource,result ;
@@ -449,7 +449,12 @@ public class detailCompetition extends AppCompatActivity {
                         tempData.put("draw",data.getString("draws"));
                         tempData.put("losse",data.getString("losses"));
                         dataTimCompetition.add(tempData);
-
+//                        ImageView tempImage = null;
+//                        Picasso.with(getApplicationContext())
+//                                .load(dataTimCompetition.get(i).get("photo"))
+//                                .resize(50,50)
+//                                .into(tempImage);
+//                        imgView.add(tempImage);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -469,5 +474,3 @@ public class detailCompetition extends AppCompatActivity {
     }
 
 }
-
-

@@ -34,5 +34,6 @@ dependencies {
     compile 'com.github.dakatso:livebutton:1.0.0'
     compile 'com.yarolegovich:lovely-dialog:1.0.4'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'id.gits:baso:1.0'
     testCompile 'junit:junit:4.12'
 }
