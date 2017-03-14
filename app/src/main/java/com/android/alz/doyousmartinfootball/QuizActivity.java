@@ -1,6 +1,7 @@
 package com.android.alz.doyousmartinfootball;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import ru.katso.livebutton.LiveButton;
 
 public class QuizActivity extends AppCompatActivity {
@@ -49,7 +51,7 @@ public class QuizActivity extends AppCompatActivity {
         poinTextView = (TextView) findViewById(R.id.score);
         editText = (EditText) findViewById(R.id.inputJawaban);
         btnAnswer = (LiveButton) findViewById(R.id.btnAnswer);
-        btnAnswer.setHeight(50);
+        btnAnswer.setHeight(70);
         apiController=new ApiController();
         dataKuiz = new ArrayList<>();
         selectedRandomData = new HashMap<>();
@@ -68,22 +70,40 @@ public class QuizActivity extends AppCompatActivity {
                         point++;
                     counter++;
                     Intent refresh = new Intent(getApplicationContext(), QuizActivity.class);
+//                    SweetAlertDialog pDialog = new SweetAlertDialog(getApplicationContext());
+//                    pDialog.setTitleText("Loading");
+//                    pDialog.setCancelable(false);
+//                    pDialog.show();
                     startActivity(refresh);
                     finish();
                 }
             });
         }
         else{
-            textView.setText("Selamat Poin Anda : "+point);
-            btnAnswer.setText("Selesai");
-            btnAnswer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    counter=point=0;
-                    Intent intent = new Intent(getApplicationContext(),Home.class);
-                    startActivity(intent);
-                }
-            });
+//            textView.setText("Selamat Poin Anda : "+point);
+//            btnAnswer.setText("Selesai");
+//            btnAnswer.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    counter=point=0;
+//                    Intent intent = new Intent(getApplicationContext(),Home.class);
+//                    startActivity(intent);
+//                }
+//            });
+            new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText("Hasil Quiz")
+                    .setContentText("Selamat Poin Anda : "+point)
+                    .setConfirmText("Ok !")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            counter=point=0;
+                            sDialog.dismiss();
+                            Intent intent = new Intent(getApplicationContext(),Home.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .show();
         }
 
     }
@@ -241,7 +261,7 @@ public class QuizActivity extends AppCompatActivity {
             String url = selectedRandomData.get("crestURI").replaceAll(" ","%20");
             Picasso.with(getApplicationContext())
                     .load(url)
-                    .resize(278, 192)
+                    .resize(100, 100)
                     .into(imageView);
             Log.e("Cek Data Ada gak : ",selectedRandomData.get("crestURI"));
             Log.e("Cek Data Ada gak : ",selectedRandomData.get("team"));
@@ -299,7 +319,7 @@ public class QuizActivity extends AppCompatActivity {
             String url = selectedRandomData.get("crestURI").replaceAll(" ","%20");
             Picasso.with(getApplicationContext())
                     .load(url)
-                    .resize(278, 192)
+                    .resize(100, 100)
                     .into(imageView);
             Log.e("Cek Data Ada gak : ",selectedRandomData.get("crestURI"));
             Log.e("Cek Data Ada gak : ",selectedRandomData.get("team"));

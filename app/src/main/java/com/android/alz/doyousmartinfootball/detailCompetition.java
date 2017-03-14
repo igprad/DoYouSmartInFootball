@@ -20,11 +20,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class detailCompetition extends AppCompatActivity {
     ApiController apiController;
     String endpointCompetition;
     ArrayList<ImageView> imgView;
     ArrayList<HashMap<String,String>> dataTimCompetition;
+    SweetAlertDialog pDialog ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -280,7 +283,11 @@ public class detailCompetition extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            Toast.makeText(getApplicationContext(),"Downloading Json",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(),"Downloading Json",Toast.LENGTH_SHORT).show();
+//            pDialog = new SweetAlertDialog(getApplicationContext());
+//            pDialog.setTitleText("Loading");
+//            pDialog.setCancelable(false);
+//            pDialog.show();
         }
 
         @Override
@@ -408,12 +415,12 @@ public class detailCompetition extends AppCompatActivity {
             for (int i = 0; i < dataTimCompetition.size(); i++) {
                 Log.e("Tes Habis Selesai  : ",dataTimCompetition.get(i).get("group"));
             }
-            Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
+//            pDialog.dismiss();
             showTableChampionLeague();
         }
     }
 
-// Data untuk Team Beda JSON
+    // Data untuk Team Beda JSON
     private class GetDataTeam2 extends AsyncTask<Void,Void,Void> {
         private String resource,result ;
 
@@ -421,8 +428,13 @@ public class detailCompetition extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            Toast.makeText(getApplicationContext(),"Downloading Json",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(),"Downloading Json",Toast.LENGTH_SHORT).show();
+//            pDialog = new SweetAlertDialog(getApplicationContext());
+//            pDialog.setTitleText("Loading");
+//            pDialog.setCancelable(false);
+//            pDialog.show();
         }
+
 
         @Override
         protected Void doInBackground(Void... params) {
@@ -468,7 +480,7 @@ public class detailCompetition extends AppCompatActivity {
             for (int i = 0; i < dataTimCompetition.size(); i++) {
                 Log.e("Tes Habis Selesai  : ",dataTimCompetition.get(i).get("team"));
             }
-            Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
+//            pDialog.dismiss();
             showTableLeague();
         }
     }
