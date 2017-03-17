@@ -2,6 +2,8 @@ package com.android.alz.doyousmartinfootball;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.PictureDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,10 +15,21 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.alz.doyousmartinfootball.controller.ApiController;
+import com.android.alz.doyousmartinfootball.svg.SvgDecoder;
+import com.android.alz.doyousmartinfootball.svg.SvgDrawableTranscoder;
+import com.android.alz.doyousmartinfootball.svg.SvgSoftwareLayerSetter;
+import com.bumptech.glide.GenericRequestBuilder;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.model.StreamEncoder;
+import com.bumptech.glide.load.resource.file.FileToStreamDecoder;
+import com.caverock.androidsvg.SVG;
 import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -28,6 +41,7 @@ public class detailCompetition extends AppCompatActivity {
     ArrayList<ImageView> imgView;
     ArrayList<HashMap<String,String>> dataTimCompetition;
     SweetAlertDialog pDialog ;
+    GenericRequestBuilder<Uri, InputStream, SVG, PictureDrawable> requestBuilder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +52,20 @@ public class detailCompetition extends AppCompatActivity {
         imgView = new ArrayList<>();
         endpointCompetition = intent.getStringExtra("endpoint");
         apiController = new ApiController();
+
+        requestBuilder = Glide.with(this)
+                .using(Glide.buildStreamModelLoader(Uri.class, this), InputStream.class)
+                .from(Uri.class)
+                .as(com.caverock.androidsvg.SVG.class)
+                .transcode(new SvgDrawableTranscoder(), PictureDrawable.class)
+                .sourceEncoder(new StreamEncoder())
+                .cacheDecoder(new FileToStreamDecoder<SVG>(new SvgDecoder()))
+                .decoder(new SvgDecoder())
+                .placeholder(R.drawable.error_circle)
+                .error(R.drawable.error_center_x)
+                .listener(new SvgSoftwareLayerSetter<Uri>());
+
+
         String jenis = intent.getStringExtra("jenis");
         if(jenis.equalsIgnoreCase("EC")||jenis.equalsIgnoreCase("CL")) {
             new GetDataTeam(endpointCompetition).execute();
@@ -111,11 +139,18 @@ public class detailCompetition extends AppCompatActivity {
             tbrow.addView(t2v);
 
             ImageView tempImage = new ImageView(this);
-            String url = dataTimCompetition.get(i).get("photo").replace(" ","%20");
-            Picasso.with(getApplicationContext())
-                    .load(url)
-                    .resize(50,50)
+            String url = dataTimCompetition.get(i).get("photo");
+            Uri uri = Uri.parse(url);
+            requestBuilder
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    // SVG cannot be serialized so it's not worth to cache it
+                    .load(uri)
+                    .override(50,50)
                     .into(tempImage);
+            tempImage.setMaxHeight(50);
+            tempImage.setMaxWidth(50);
+            tempImage.setMinimumHeight(50);
+            tempImage.setMinimumWidth(50);
             tbrow.addView(tempImage);
 
             TextView t4v = new TextView(this);
@@ -236,10 +271,22 @@ public class detailCompetition extends AppCompatActivity {
 
             ImageView tempImage = new ImageView(this);
             String url = dataTimCompetition.get(i).get("crestURI").replace(" ","%20");
-            Picasso.with(getApplicationContext())
-                    .load(url)
-                    .resize(50,50)
+//            Picasso.with(getApplicationContext())
+//                    .load(url)
+//                    .resize(50,50)
+//                    .into(tempImage);
+//            tbrow.addView(tempImage);
+            Uri uri = Uri.parse(url);
+            requestBuilder
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    // SVG cannot be serialized so it's not worth to cache it
+                    .load(uri)
+                    .override(50,50)
                     .into(tempImage);
+            tempImage.setMaxHeight(50);
+            tempImage.setMaxWidth(50);
+            tempImage.setMinimumHeight(50);
+            tempImage.setMinimumWidth(50);
             tbrow.addView(tempImage);
 
             TextView t3v = new TextView(this);

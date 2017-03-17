@@ -64,6 +64,7 @@
             android:layout_marginBottom="32dp"
             android:gravity="center_horizontal"
             android:maxLines="1"
+            android:lines="1"
             android:hint="Jawaban Anda" />
     </RelativeLayout>
 
