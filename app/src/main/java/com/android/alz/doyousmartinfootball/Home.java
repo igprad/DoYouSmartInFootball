@@ -32,7 +32,7 @@ public class Home extends AppCompatActivity {
         btnQuiz = (MagicButton) findViewById(R.id.btnQuiz);
         btnInformation = (MagicButton) findViewById(R.id.btnFyi);
         btnShareFacebbok = (MagicButton) findViewById(R.id.btnFB);
-
+        btnShareTwitter = (MagicButton) findViewById(R.id.btnTwit);
         btnQuiz.setMagicButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +61,13 @@ public class Home extends AppCompatActivity {
                     shareDialog.show(linkContent);
 
                 }
+            }
+        });
+        btnShareTwitter.setMagicButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goTwit = new Intent(Home.this,TweetFootball.class);
+                startActivity(goTwit);
             }
         });
     }
