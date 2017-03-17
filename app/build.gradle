@@ -22,7 +22,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -36,5 +36,9 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'id.gits:baso:1.0'
     compile 'cn.pedant.sweetalert:library:1.1'
+    compile 'com.caverock:androidsvg:1.2.1'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.android.support:support-v4:19.1.0'
     testCompile 'junit:junit:4.12'
+    compile files('libs/svg-android-1.1.jar')
 }

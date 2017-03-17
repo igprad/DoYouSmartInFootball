@@ -1,7 +1,8 @@
 package com.android.alz.doyousmartinfootball;
 
 import android.content.Intent;
-import android.graphics.Color;
+import android.graphics.drawable.PictureDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,16 +12,26 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.android.alz.doyousmartinfootball.api.FootballData;
 import com.android.alz.doyousmartinfootball.controller.ApiController;
+import com.android.alz.doyousmartinfootball.svg.SvgDecoder;
+import com.android.alz.doyousmartinfootball.svg.SvgDrawableTranscoder;
+import com.android.alz.doyousmartinfootball.svg.SvgSoftwareLayerSetter;
+import com.bumptech.glide.GenericRequestBuilder;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.model.StreamEncoder;
+import com.bumptech.glide.load.resource.file.FileToStreamDecoder;
 import com.squareup.picasso.Picasso;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -40,7 +51,7 @@ public class QuizActivity extends AppCompatActivity {
     ApiController apiController;
     ArrayList<HashMap<String,String>> dataKuiz;
     HashMap<String,String> selectedRandomData;
-    String linkURIimage;
+    GenericRequestBuilder<Uri, InputStream, com.caverock.androidsvg.SVG, PictureDrawable> requestBuilder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +62,18 @@ public class QuizActivity extends AppCompatActivity {
         poinTextView = (TextView) findViewById(R.id.score);
         editText = (EditText) findViewById(R.id.inputJawaban);
         btnAnswer = (LiveButton) findViewById(R.id.btnAnswer);
+        requestBuilder = Glide.with(this)
+                .using(Glide.buildStreamModelLoader(Uri.class, this), InputStream.class)
+                .from(Uri.class)
+                .as(com.caverock.androidsvg.SVG.class)
+                .transcode(new SvgDrawableTranscoder(), PictureDrawable.class)
+                .sourceEncoder(new StreamEncoder())
+                .cacheDecoder(new FileToStreamDecoder<com.caverock.androidsvg.SVG>(new SvgDecoder()))
+                .decoder(new SvgDecoder())
+                .placeholder(R.drawable.error_circle)
+                .error(R.drawable.error_center_x)
+                .listener(new SvgSoftwareLayerSetter<Uri>());
+
         btnAnswer.setHeight(70);
         apiController=new ApiController();
         dataKuiz = new ArrayList<>();
@@ -70,26 +93,12 @@ public class QuizActivity extends AppCompatActivity {
                         point++;
                     counter++;
                     Intent refresh = new Intent(getApplicationContext(), QuizActivity.class);
-//                    SweetAlertDialog pDialog = new SweetAlertDialog(getApplicationContext());
-//                    pDialog.setTitleText("Loading");
-//                    pDialog.setCancelable(false);
-//                    pDialog.show();
                     startActivity(refresh);
                     finish();
                 }
             });
         }
         else{
-//            textView.setText("Selamat Poin Anda : "+point);
-//            btnAnswer.setText("Selesai");
-//            btnAnswer.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    counter=point=0;
-//                    Intent intent = new Intent(getApplicationContext(),Home.class);
-//                    startActivity(intent);
-//                }
-//            });
             new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText("Hasil Quiz")
                     .setContentText("Selamat Poin Anda : "+point)
@@ -316,10 +325,34 @@ public class QuizActivity extends AppCompatActivity {
             int n = rand.nextInt(dataKuiz.size());
             selectedRandomData=dataKuiz.get(n);
             Picasso.with(getApplicationContext()).setDebugging(true);
-            String url = selectedRandomData.get("crestURI").replaceAll(" ","%20");
-            Picasso.with(getApplicationContext())
-                    .load(url)
-                    .resize(100, 100)
+//            String url = selectedRandomData.get("crestURI").replaceAll(" ","%20");
+            String url = selectedRandomData.get("crestURI");
+//            Picasso.with(getApplicationContext())
+//                    .load(url)
+//                    .resize(100, 100)
+//                    .into(new Target() {
+//                              @Override
+//                              public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+//                                  tesSvG.setImageBitmap(bitmap);
+//                              }
+//
+//                              @Override
+//                              public void onBitmapFailed(Drawable errorDrawable) {
+//
+//                              }
+//
+//                              @Override
+//                              public void onPrepareLoad(Drawable placeHolderDrawable) {
+//
+//                              }
+//                          });
+////                            tesSvG.setImageURI();
+            Uri uri = Uri.parse(url);
+            requestBuilder
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    // SVG cannot be serialized so it's not worth to cache it
+                    .load(uri)
+                    .override(100,100)
                     .into(imageView);
             Log.e("Cek Data Ada gak : ",selectedRandomData.get("crestURI"));
             Log.e("Cek Data Ada gak : ",selectedRandomData.get("team"));

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:svgimageview="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/parentLayout"
-    tools:context="com.android.alz.doyousmartinfootball.QuizActivity">
+    tools:context="com.android.alz.doyousmartinfootball.QuizActivity"
+    >
+
 
     <ImageView
         android:id="@+id/gambarPertanyaan"
@@ -60,6 +63,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginBottom="32dp"
             android:gravity="center_horizontal"
+            android:maxLines="1"
             android:hint="Jawaban Anda" />
     </RelativeLayout>
 
