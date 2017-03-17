@@ -24,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.StreamEncoder;
 import com.bumptech.glide.load.resource.file.FileToStreamDecoder;
+import com.facebook.share.widget.ShareButton;
 import com.squareup.picasso.Picasso;
 
 
@@ -89,12 +90,30 @@ public class QuizActivity extends AppCompatActivity {
             btnAnswer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(editText.getText().toString().equalsIgnoreCase(selectedRandomData.get("team")))
+                    String rsltMssg="";
+                    int errType=0;
+                    if(editText.getText().toString().equalsIgnoreCase(selectedRandomData.get("team"))) {
                         point++;
+                        rsltMssg="Jawaban Anda Benar";
+                        errType = SweetAlertDialog.SUCCESS_TYPE;
+                    }
+                    else{
+                        rsltMssg="Jawaban Anda Salah";
+                        errType = SweetAlertDialog.ERROR_TYPE;
+                    }
                     counter++;
-                    Intent refresh = new Intent(getApplicationContext(), QuizActivity.class);
-                    startActivity(refresh);
-                    finish();
+                    new SweetAlertDialog(QuizActivity.this, errType)
+                            .setTitleText("Notification")
+                            .setContentText(rsltMssg)
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    Intent refresh = new Intent(getApplicationContext(), QuizActivity.class);
+                                    startActivity(refresh);
+                                    finish();
+                                }
+                            })
+                            .show();
                 }
             });
         }
@@ -267,10 +286,13 @@ public class QuizActivity extends AppCompatActivity {
             int n = rand.nextInt(dataKuiz.size());
             selectedRandomData=dataKuiz.get(n);
             Picasso.with(getApplicationContext()).setDebugging(true);
-            String url = selectedRandomData.get("crestURI").replaceAll(" ","%20");
-            Picasso.with(getApplicationContext())
-                    .load(url)
-                    .resize(100, 100)
+            String url = selectedRandomData.get("crestURI");
+
+            Uri uri = Uri.parse(url);
+            requestBuilder
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .load(uri)
+                    .override(50,50)
                     .into(imageView);
             Log.e("Cek Data Ada gak : ",selectedRandomData.get("crestURI"));
             Log.e("Cek Data Ada gak : ",selectedRandomData.get("team"));
@@ -325,32 +347,11 @@ public class QuizActivity extends AppCompatActivity {
             int n = rand.nextInt(dataKuiz.size());
             selectedRandomData=dataKuiz.get(n);
             Picasso.with(getApplicationContext()).setDebugging(true);
-//            String url = selectedRandomData.get("crestURI").replaceAll(" ","%20");
             String url = selectedRandomData.get("crestURI");
-//            Picasso.with(getApplicationContext())
-//                    .load(url)
-//                    .resize(100, 100)
-//                    .into(new Target() {
-//                              @Override
-//                              public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-//                                  tesSvG.setImageBitmap(bitmap);
-//                              }
-//
-//                              @Override
-//                              public void onBitmapFailed(Drawable errorDrawable) {
-//
-//                              }
-//
-//                              @Override
-//                              public void onPrepareLoad(Drawable placeHolderDrawable) {
-//
-//                              }
-//                          });
-////                            tesSvG.setImageURI();
+
             Uri uri = Uri.parse(url);
             requestBuilder
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    // SVG cannot be serialized so it's not worth to cache it
                     .load(uri)
                     .override(100,100)
                     .into(imageView);

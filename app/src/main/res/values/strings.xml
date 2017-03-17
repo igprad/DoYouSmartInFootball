@@ -5,4 +5,5 @@
         <item>Teams</item>
         <item>League Table</item>
     </string-array>
+    <string name="facebook_app_id">1767010470294722</string>
 </resources>
