@@ -14,6 +14,7 @@ import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
 
 import br.com.bloder.magic.view.MagicButton;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class Home extends AppCompatActivity {
 
@@ -55,7 +56,8 @@ public class Home extends AppCompatActivity {
                             .setContentTitle("Do You Smart in Football?")
                             .setContentDescription(
                                     "Do you dare to challenge your knowledge about football/soccer?")
-                            .setContentUrl(Uri.parse("Link Play Store"))
+                            .setContentUrl(Uri.parse("https://play.google.com/store"))
+                            .setImageUrl(Uri.parse("https://preview.ibb.co/giDyMF/Screenshot_2017_03_19_12_16_19.jpg"))
                             .build();
 
                     shareDialog.show(linkContent);
@@ -71,6 +73,24 @@ public class Home extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Konfirmasi")
+                .setContentText("Apakah anda ingin keluar dari aplikasi ini ?")
+                .setConfirmText("Iya")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        moveTaskToBack(true);
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                        System.exit(1);
+                    }
+                })
+                .show();
+    }
+
 
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {

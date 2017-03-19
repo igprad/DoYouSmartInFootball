@@ -37,7 +37,6 @@ dependencies {
     compile 'com.github.dakatso:livebutton:1.0.0'
     compile 'com.yarolegovich:lovely-dialog:1.0.4'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'id.gits:baso:1.0'
     compile 'cn.pedant.sweetalert:library:1.1'
     compile 'com.caverock:androidsvg:1.2.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'

@@ -1,5 +1,6 @@
 package com.android.alz.doyousmartinfootball;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.PictureDrawable;
@@ -13,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.android.alz.doyousmartinfootball.controller.ApiController;
 import com.android.alz.doyousmartinfootball.svg.SvgDecoder;
 import com.android.alz.doyousmartinfootball.svg.SvgDrawableTranscoder;
@@ -24,7 +25,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.StreamEncoder;
 import com.bumptech.glide.load.resource.file.FileToStreamDecoder;
 import com.caverock.androidsvg.SVG;
-import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,6 +42,7 @@ public class detailCompetition extends AppCompatActivity {
     ArrayList<ImageView> imgView;
     ArrayList<HashMap<String,String>> dataTimCompetition;
     SweetAlertDialog pDialog ;
+    ProgressDialog pDialogMuter;
     GenericRequestBuilder<Uri, InputStream, SVG, PictureDrawable> requestBuilder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -271,15 +273,9 @@ public class detailCompetition extends AppCompatActivity {
 
             ImageView tempImage = new ImageView(this);
             String url = dataTimCompetition.get(i).get("crestURI").replace(" ","%20");
-//            Picasso.with(getApplicationContext())
-//                    .load(url)
-//                    .resize(50,50)
-//                    .into(tempImage);
-//            tbrow.addView(tempImage);
             Uri uri = Uri.parse(url);
             requestBuilder
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    // SVG cannot be serialized so it's not worth to cache it
                     .load(uri)
                     .override(50,50)
                     .into(tempImage);
@@ -321,6 +317,7 @@ public class detailCompetition extends AppCompatActivity {
 
             stk.addView(tbrow);
         }
+
     }
 
     private class GetDataTeam extends AsyncTask<Void,Void,Void> {
@@ -330,11 +327,15 @@ public class detailCompetition extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-//            Toast.makeText(getApplicationContext(),"Downloading Json",Toast.LENGTH_SHORT).show();
-//            pDialog = new SweetAlertDialog(getApplicationContext());
-//            pDialog.setTitleText("Loading");
-//            pDialog.setCancelable(false);
-//            pDialog.show();
+            pDialogMuter = new ProgressDialog(detailCompetition.this,
+                    ProgressDialog.THEME_DEVICE_DEFAULT_DARK);
+            pDialogMuter.setTitle("Please wait");
+            pDialogMuter.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            pDialogMuter.setMessage("Loading data...");
+            pDialogMuter.setIndeterminate(true);
+            pDialogMuter.setCancelable(false);
+            pDialogMuter.setInverseBackgroundForced(true);
+            pDialogMuter.show();
         }
 
         @Override
@@ -462,10 +463,11 @@ public class detailCompetition extends AppCompatActivity {
             for (int i = 0; i < dataTimCompetition.size(); i++) {
                 Log.e("Tes Habis Selesai  : ",dataTimCompetition.get(i).get("group"));
             }
-//            pDialog.dismiss();
+            pDialogMuter.dismiss();
             showTableChampionLeague();
         }
     }
+
 
     // Data untuk Team Beda JSON
     private class GetDataTeam2 extends AsyncTask<Void,Void,Void> {
@@ -475,11 +477,15 @@ public class detailCompetition extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-//            Toast.makeText(getApplicationContext(),"Downloading Json",Toast.LENGTH_SHORT).show();
-//            pDialog = new SweetAlertDialog(getApplicationContext());
-//            pDialog.setTitleText("Loading");
-//            pDialog.setCancelable(false);
-//            pDialog.show();
+            pDialogMuter = new ProgressDialog(detailCompetition.this,
+                    ProgressDialog.THEME_DEVICE_DEFAULT_DARK);
+            pDialogMuter.setTitle("Please wait");
+            pDialogMuter.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            pDialogMuter.setMessage("Loading data...");
+            pDialogMuter.setIndeterminate(true);
+            pDialogMuter.setCancelable(false);
+            pDialogMuter.setInverseBackgroundForced(true);
+            pDialogMuter.show();
         }
 
 
@@ -527,7 +533,7 @@ public class detailCompetition extends AppCompatActivity {
             for (int i = 0; i < dataTimCompetition.size(); i++) {
                 Log.e("Tes Habis Selesai  : ",dataTimCompetition.get(i).get("team"));
             }
-//            pDialog.dismiss();
+            pDialogMuter.dismiss();
             showTableLeague();
         }
     }

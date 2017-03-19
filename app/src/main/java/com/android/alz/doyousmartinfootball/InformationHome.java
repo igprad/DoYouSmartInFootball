@@ -1,5 +1,6 @@
 package com.android.alz.doyousmartinfootball;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +10,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.alz.doyousmartinfootball.api.FootballData;
 import com.android.alz.doyousmartinfootball.controller.ApiController;
@@ -21,7 +22,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
 
 import ru.katso.livebutton.LiveButton;
 
@@ -37,7 +37,7 @@ public class InformationHome extends AppCompatActivity {
     private TextView txtView1;
     private ArrayList<String> temp;
     private ListView listView;
-
+    private ProgressDialog pDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +63,6 @@ public class InformationHome extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(getApplicationContext(),tempLinkLeagueTable.get(position),Toast.LENGTH_LONG).show(); mengecek link href dari hateoas
                 Intent goToNextActivity = new Intent(getApplicationContext(),detailCompetition.class);
                 Bundle data = new Bundle();
                 data.putString("endpoint",tempLinkLeagueTable.get(position));
@@ -81,8 +80,15 @@ public class InformationHome extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             tempData.clear();
-            Toast.makeText(InformationHome.this,"Json Data is " +
-                    "downloading",Toast.LENGTH_SHORT).show();
+            pDialog = new ProgressDialog(InformationHome.this,
+                    ProgressDialog.THEME_DEVICE_DEFAULT_DARK);
+            pDialog.setTitle("Please wait");
+            pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            pDialog.setMessage("Loading data...");
+            pDialog.setIndeterminate(true);
+            pDialog.setCancelable(false);
+            pDialog.setInverseBackgroundForced(true);
+            pDialog.show();
         }
 
         @Override
@@ -119,10 +125,8 @@ public class InformationHome extends AppCompatActivity {
                     android.R.id.text1,tempData);
 
             listView.setAdapter(adapter);
-
-            Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
+            pDialog.dismiss();
         }
     }
-
 
 }

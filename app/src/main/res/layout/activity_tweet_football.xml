@@ -5,9 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.android.alz.doyousmartinfootball.TweetFootball">
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/txtTwitBearer"/>
+
+    <ListView
+        android:id="@+id/ViewListResult"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:divider="@color/material_white"
+        android:dividerHeight="2dp"
+        android:background="@color/material_blue600"/>
+
 </LinearLayout>
 

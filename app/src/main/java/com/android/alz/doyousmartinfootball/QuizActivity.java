@@ -1,5 +1,6 @@
 package com.android.alz.doyousmartinfootball;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.PictureDrawable;
 import android.net.Uri;
@@ -47,12 +48,13 @@ public class QuizActivity extends AppCompatActivity {
     ImageView imageView ;
     TextView textView;
     EditText editText;
-    LiveButton btnAnswer;
+    LiveButton btnAnswer,btnReset;
     TextView poinTextView;
     ApiController apiController;
     ArrayList<HashMap<String,String>> dataKuiz;
     HashMap<String,String> selectedRandomData;
     GenericRequestBuilder<Uri, InputStream, com.caverock.androidsvg.SVG, PictureDrawable> requestBuilder;
+    ProgressDialog pDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +65,7 @@ public class QuizActivity extends AppCompatActivity {
         poinTextView = (TextView) findViewById(R.id.score);
         editText = (EditText) findViewById(R.id.inputJawaban);
         btnAnswer = (LiveButton) findViewById(R.id.btnAnswer);
+        btnReset = (LiveButton) findViewById(R.id.btnReset);
         requestBuilder = Glide.with(this)
                 .using(Glide.buildStreamModelLoader(Uri.class, this), InputStream.class)
                 .from(Uri.class)
@@ -76,6 +79,7 @@ public class QuizActivity extends AppCompatActivity {
                 .listener(new SvgSoftwareLayerSetter<Uri>());
 
         btnAnswer.setHeight(70);
+        btnReset.setHeight(70);
         apiController=new ApiController();
         dataKuiz = new ArrayList<>();
         selectedRandomData = new HashMap<>();
@@ -116,6 +120,12 @@ public class QuizActivity extends AppCompatActivity {
                             .show();
                 }
             });
+            btnReset.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    generateQuizCompetition();
+                }
+            });
         }
         else{
             new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
@@ -134,6 +144,31 @@ public class QuizActivity extends AppCompatActivity {
                     .show();
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Konfirmasi")
+                .setContentText("Apakah anda ingin keluar dari kuis mode ?")
+                .setConfirmText("Iya")
+                .setCancelText("Tidak")
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismiss();
+                    }
+                })
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        counter=point=0;
+                        sDialog.dismiss();
+                        Intent intent = new Intent(getApplicationContext(),Home.class);
+                        startActivity(intent);
+                    }
+                })
+                .show();
     }
 
     private void generateQuizCompetition(){
@@ -158,7 +193,15 @@ public class QuizActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-
+            pDialog = new ProgressDialog(QuizActivity.this,
+                    ProgressDialog.THEME_DEVICE_DEFAULT_DARK);
+            pDialog.setTitle("Please wait");
+            pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            pDialog.setMessage("Loading data...");
+            pDialog.setIndeterminate(true);
+            pDialog.setCancelable(false);
+            pDialog.setInverseBackgroundForced(true);
+            pDialog.show();
         }
 
         @Override
@@ -296,6 +339,7 @@ public class QuizActivity extends AppCompatActivity {
                     .into(imageView);
             Log.e("Cek Data Ada gak : ",selectedRandomData.get("crestURI"));
             Log.e("Cek Data Ada gak : ",selectedRandomData.get("team"));
+            pDialog.dismiss();
         }
     }
 
@@ -306,7 +350,15 @@ public class QuizActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-
+            pDialog = new ProgressDialog(QuizActivity.this,
+                    ProgressDialog.THEME_DEVICE_DEFAULT_DARK);
+            pDialog.setTitle("Please wait");
+            pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            pDialog.setMessage("Loading data...");
+            pDialog.setIndeterminate(true);
+            pDialog.setCancelable(false);
+            pDialog.setInverseBackgroundForced(true);
+            pDialog.show();
         }
 
         @Override
@@ -357,6 +409,9 @@ public class QuizActivity extends AppCompatActivity {
                     .into(imageView);
             Log.e("Cek Data Ada gak : ",selectedRandomData.get("crestURI"));
             Log.e("Cek Data Ada gak : ",selectedRandomData.get("team"));
+            pDialog.dismiss();
         }
     }
+
+
 }

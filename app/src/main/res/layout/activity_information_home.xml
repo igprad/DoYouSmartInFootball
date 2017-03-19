@@ -5,13 +5,14 @@
     android:id="@+id/activity_information_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/material_greenA400"
+    android:background="@color/material_black"
     android:paddingBottom="5dp"
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
     android:paddingTop="5dp"
     tools:context="com.android.alz.doyousmartinfootball.InformationHome"
     >
+
 
     <ru.katso.livebutton.LiveButton
         android:id="@+id/btnCompetitions"
@@ -32,8 +33,8 @@
         android:layout_height="match_parent"
         android:layout_below="@id/btnCompetitions"
         android:layout_marginTop="10dp"
-        android:background="@color/md_green800"
-        android:foregroundTint="@color/md_black">
+        android:background="#2C3539"
+        android:foregroundTint="#2C3539">
 
         <ListView
             android:id="@+id/ViewListResult"
