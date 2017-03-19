@@ -4,10 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <provider
-        android:name="com.facebook.FacebookContentProvider"
-        android:authorities="com.facebook.app.FacebookContentProvider1767010470294722"
-        android:exported="true" />
+    <!--<provider-->
+        <!--android:name="com.facebook.FacebookContentProvider"-->
+        <!--android:authorities="com.facebook.app.FacebookContentProvider1767010470294722"-->
+        <!--android:exported="true" />-->
 
     <application
         android:allowBackup="true"
