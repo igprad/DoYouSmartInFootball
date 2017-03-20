@@ -56,7 +56,7 @@ public class Home extends AppCompatActivity {
                             .setContentTitle("Do You Smart in Football?")
                             .setContentDescription(
                                     "Do you dare to challenge your knowledge about football/soccer?")
-                            .setContentUrl(Uri.parse("https://play.google.com/store"))
+                            .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=alz.doyousmartinfootball"))
                             .setImageUrl(Uri.parse("https://preview.ibb.co/giDyMF/Screenshot_2017_03_19_12_16_19.jpg"))
                             .build();
 
